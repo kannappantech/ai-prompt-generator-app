@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
-import { User, Mail, Lock, AlertCircle, CheckCircle } from 'lucide-react'
+import { User, Mail, Lock, CircleAlert as AlertCircle, CircleCheck as CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export function AuthModal({ isOpen, onClose, onAuthSuccess }) {
