@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx'
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
-import { User, Mail, Lock, CircleAlert as AlertCircle, CircleCheck as CheckCircle } from 'lucide-react'
+import { User, Mail, Lock, AlertCircle, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export function AuthModal({ isOpen, onClose, onAuthSuccess }) {
@@ -123,52 +123,52 @@ export function AuthModal({ isOpen, onClose, onAuthSuccess }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md bg-[#151515] border-gray-800/50 text-white">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center text-white">Welcome to AI Prompt Generator</DialogTitle>
+          <DialogTitle className="text-center">Welcome to AI Prompt Generator</DialogTitle>
         </DialogHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-[#0a0a0a] border-gray-800">
-            <TabsTrigger value="login" className="data-[state=active]:bg-gray-800">Login</TabsTrigger>
-            <TabsTrigger value="register" className="data-[state=active]:bg-gray-800">Sign Up</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="login">Login</TabsTrigger>
+            <TabsTrigger value="register">Sign Up</TabsTrigger>
           </TabsList>
-
+          
           <TabsContent value="login">
-            <div className="bg-[#0a0a0a] border border-gray-800 rounded-xl">
-              <div className="p-6">
-                <div className="mb-6">
-                  <h3 className="text-xl font-semibold text-white">Login</h3>
-                  <p className="text-sm text-gray-400 mt-1">
-                    Enter your credentials to access your account
-                  </p>
-                </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Login</CardTitle>
+                <CardDescription>
+                  Enter your credentials to access your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="login-email" className="text-gray-300">Email</Label>
+                    <Label htmlFor="login-email">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
                         id="login-email"
                         type="email"
                         placeholder="Enter your email"
-                        className="pl-10 bg-[#151515] border-gray-800 text-white placeholder:text-gray-600"
+                        className="pl-10"
                         value={loginData.email}
                         onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                         required
                       />
                     </div>
                   </div>
-
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="login-password" className="text-gray-300">Password</Label>
+                    <Label htmlFor="login-password">Password</Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
                         id="login-password"
                         type="password"
                         placeholder="Enter your password"
-                        className="pl-10 bg-[#151515] border-gray-800 text-white placeholder:text-gray-600"
+                        className="pl-10"
                         value={loginData.password}
                         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                         required
@@ -177,100 +177,98 @@ export function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                   </div>
 
                   {error && (
-                    <Alert variant="destructive" className="bg-red-950/50 border-red-900">
+                    <Alert variant="destructive">
                       <AlertCircle className="h-4 w-4" />
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )}
 
                   {success && (
-                    <Alert className="border-green-900 bg-green-950/50 text-green-400">
+                    <Alert className="border-green-200 bg-green-50 text-green-800">
                       <CheckCircle className="h-4 w-4" />
                       <AlertDescription>{success}</AlertDescription>
                     </Alert>
                   )}
 
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 disabled:from-gray-700 disabled:to-gray-700 text-white font-medium py-2.5 rounded-lg transition-all duration-200"
                   >
                     {isLoading ? 'Logging in...' : 'Login'}
-                  </motion.button>
+                  </Button>
                 </form>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </TabsContent>
           
           <TabsContent value="register">
-            <div className="bg-[#0a0a0a] border border-gray-800 rounded-xl">
-              <div className="p-6">
-                <div className="mb-6">
-                  <h3 className="text-xl font-semibold text-white">Create Account</h3>
-                  <p className="text-sm text-gray-400 mt-1">
-                    Sign up to save and manage your AI prompts
-                  </p>
-                </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Create Account</CardTitle>
+                <CardDescription>
+                  Sign up to save and manage your AI prompts
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="register-username" className="text-gray-300">Username</Label>
+                    <Label htmlFor="register-username">Username</Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
                         id="register-username"
                         type="text"
                         placeholder="Choose a username"
-                        className="pl-10 bg-[#151515] border-gray-800 text-white placeholder:text-gray-600"
+                        className="pl-10"
                         value={registerData.username}
                         onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
                         required
                       />
                     </div>
                   </div>
-
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="register-email" className="text-gray-300">Email</Label>
+                    <Label htmlFor="register-email">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
                         id="register-email"
                         type="email"
                         placeholder="Enter your email"
-                        className="pl-10 bg-[#151515] border-gray-800 text-white placeholder:text-gray-600"
+                        className="pl-10"
                         value={registerData.email}
                         onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
                         required
                       />
                     </div>
                   </div>
-
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="register-password" className="text-gray-300">Password</Label>
+                    <Label htmlFor="register-password">Password</Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
                         id="register-password"
                         type="password"
                         placeholder="Create a password"
-                        className="pl-10 bg-[#151515] border-gray-800 text-white placeholder:text-gray-600"
+                        className="pl-10"
                         value={registerData.password}
                         onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
                         required
                       />
                     </div>
                   </div>
-
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="register-confirm-password" className="text-gray-300">Confirm Password</Label>
+                    <Label htmlFor="register-confirm-password">Confirm Password</Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                       <Input
                         id="register-confirm-password"
                         type="password"
                         placeholder="Confirm your password"
-                        className="pl-10 bg-[#151515] border-gray-800 text-white placeholder:text-gray-600"
+                        className="pl-10"
                         value={registerData.confirmPassword}
                         onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
                         required
@@ -279,31 +277,29 @@ export function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                   </div>
 
                   {error && (
-                    <Alert variant="destructive" className="bg-red-950/50 border-red-900">
+                    <Alert variant="destructive">
                       <AlertCircle className="h-4 w-4" />
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )}
 
                   {success && (
-                    <Alert className="border-green-900 bg-green-950/50 text-green-400">
+                    <Alert className="border-green-200 bg-green-50 text-green-800">
                       <CheckCircle className="h-4 w-4" />
                       <AlertDescription>{success}</AlertDescription>
                     </Alert>
                   )}
 
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 disabled:from-gray-700 disabled:to-gray-700 text-white font-medium py-2.5 rounded-lg transition-all duration-200"
                   >
                     {isLoading ? 'Creating Account...' : 'Create Account'}
-                  </motion.button>
+                  </Button>
                 </form>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </DialogContent>
