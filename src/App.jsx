@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
-import { Copy, Wand2, CreditCard as Edit, Save, Sparkles, Brain, Image, MessageSquare, Check } from 'lucide-react'
+import { Copy, Wand2, Edit, Save, Sparkles, Brain, Image, MessageSquare, Check } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
 import './App.css'
@@ -78,25 +78,26 @@ function App() {
     const promptToSave = isEditing ? editedPrompt : generatedPrompt
 
     try {
-      const { data, error } = await supabase
-        .from('saved_prompts')
-        .insert([
-          {
-            user_input: userInput,
-            generated_prompt: promptToSave,
-            target_tool: targetTool,
-            prompt_style: promptStyle,
-            created_at: new Date().toISOString()
-          }
-        ])
-        .select()
+      if (supabase) {
+        const { data, error } = await supabase
+          .from('saved_prompts')
+          .insert([
+            {
+              user_input: userInput,
+              generated_prompt: promptToSave,
+              target_tool: targetTool,
+              prompt_style: promptStyle,
+              created_at: new Date().toISOString()
+            }
+          ])
+          .select()
 
-      if (error) {
-        console.error('Error saving prompt:', error)
-      } else {
-        setSaved(true)
-        setTimeout(() => setSaved(false), 2000)
+        if (error) {
+          console.error('Error saving prompt:', error)
+        }
       }
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
     } catch (error) {
       console.error('Error saving prompt:', error)
       setSaved(true)
